@@ -1,0 +1,54 @@
+{
+  "name": "@webfaas/webfaas-server-aws.git",
+  "version": "0.1.0",
+  "description": "WebFaaS Framework - Server - AWS",
+  "main": "lib/index.js",
+  "readmeFilename": "README.md",
+  "keywords": [
+    "webfaas",
+    "plugin"
+  ],
+  "scripts": {
+    "test": "mocha --config scripts/mocha.json",
+    "test:coverage": "nyc --nycrc-path scripts/nyc.json npm run test",
+    "start": "node_modules/.bin/tsc -w && npm run build:static",
+    "build": "npm run build:clean && node_modules/.bin/tsc && npm run build:static",
+    "build:clean": "rm -rf dist",
+    "build:static": "cp package.json dist && cp README.md dist && cp .npmignore dist",
+    "build:lambda": "rm -rf lambda.zip && rm -rf dist_lambda && cp -R dist dist_lambda && rm -rf dist_lambda/examples && rm -rf dist_lambda/test && cd dist_lambda && npm install --production && zip -r lambda.zip . && mv lambda.zip ../ && cd .. && rm -rf dist_lambda",
+    "setnpmtoken": "rm ~/.npmrc && echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ~/.npmrc",
+    "publish:npm": "cd dist && npm publish --access public",
+    "publish:lambda": "aws lambda update-function-code --function-name teste1 --zip-file fileb://lambda.zip && rm lambda.zip",
+    "buildAndTest": "npm run build && npm run test:coverage",
+    "setnpmtokenAndPublish": "npm run setnpmtoken && npm run publish:npm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:webfaas/webfaas-server-aws.git"
+  },
+  "dependencies": {
+    "@webfaas/webfaas": "^0.3",
+    "@webfaas/webfaas-plugin-packageregistryrouting": "^0.2",
+    "@webfaas/webfaas-plugin-packageregistry-npm": "^0.2",
+    "@webfaas/webfaas-plugin-packageregistry-github": "^0.2"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2",
+    "@types/mocha": "^7.0",
+    "@types/node": "^13.7",
+    "chai": "^4.2",
+    "mocha": "^7.1",
+    "nyc": "^15.0",
+    "typescript": "^3.8",
+    "typescript-tslint-plugin": "^0.5",
+    "@types/aws-lambda": "^8.10"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "author": {
+    "name": "Rogério Dias Moreira",
+    "email": "rogeriodegoiania@gmail.com"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,11 @@
+*~
+*.log
+node_modules
+yarn.lock
+package-lock.json
+dist
+dist_lambda
+.nyc_output
+.scannerwork
+coverage
+lambda.zip
