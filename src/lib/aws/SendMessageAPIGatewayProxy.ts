@@ -30,11 +30,13 @@ export class SendMessageAPIGatewayProxy {
             let payload: any;
             let msg: IMessage | null;
             let result = {} as APIGatewayProxyResult;
+            let jsonRpcRequestID: string | number | null = null;
 
             if (event.body){
                 if (requestContentType === "application/json-rpc"){
                     try {
                         payload = MessageUtil.parseJsonRpcRequest(event.body);
+                        jsonRpcRequestID = payload.id || null;
                     }
                     catch (errTryParse) {
                         this.log.writeError("processRequest", errTryParse, undefined, __filename);
@@ -77,8 +79,8 @@ export class SendMessageAPIGatewayProxy {
             }
             
             if (msg){
-                let requestID: string | number = msg.header.messageID || MessageUtil.parseString(event.headers["X-Request-ID"]) || context.awsRequestId;
-                msg.header.messageID = requestID;
+                let requestID: string | number = jsonRpcRequestID || msg.header.messageID || MessageUtil.parseString(event.headers["X-Request-ID"]) || context.awsRequestId;
+                msg.header.messageID = requestID.toString();
                 
                 this.core.sendMessage(msg).then((msgResponse) => {
                     if (requestContentType === "application/json-rpc"){

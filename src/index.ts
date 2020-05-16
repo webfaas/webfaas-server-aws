@@ -39,8 +39,6 @@ exports.handler = async (event: any, context: any) => {
     }
     
     var result: any = null;
-    if (event.path){
-        result = await sendMessageAPIGatewayProxy.processRequest(event, context);
-    }
+    result = await sendMessageAPIGatewayProxy.processRequest(event, context);
     return result;
 };
