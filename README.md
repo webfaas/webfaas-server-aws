@@ -7,9 +7,8 @@ WebFaaS Server AWS for [node](http://nodejs.org).
 
 ### Example
 ```shell
-curl -XPOST https://xxx.execute-api.us-east-1.amazonaws.com/prod/@webfaaslabs/math:sum/1.0.0 -H "x-api-key: xxx" -H "content-type: application/json" -d '{"x":2,"y":3}' -v
+curl -XPOST https://xxx.execute-api.us-east-1.amazonaws.com/prod/@webfaaslabs/math:sum/1.0.0 -H "x-api-key: yyy" -H "content-type: application/json" -d '{"x":2,"y":3}' -v
 ```
-
 ## License
 
 [MIT](LICENSE)
