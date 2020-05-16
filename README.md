@@ -5,42 +5,9 @@ WebFaaS Server AWS for [node](http://nodejs.org).
 [![Linux Build][travis-image]][travis-url]
 [![Test Coverage][coveralls-image]][coveralls-url]
 
-### Config - Simple
-```json
-{
-    "endpoint.http": [
-        {
-            "port": "[http port]"
-        }
-    ]
-}
-```
-
-
-### Config - Complete
-```json
-{
-    "endpoint.http": [
-        {
-            "port": "[http port]",
-            "hostname": "[http hostname]",
-            "httpConfig": {
-                "ca": "[location ca]",
-                "cert": "[location cert]",
-                "pfx": "[location pfx]"
-            }
-        }
-    ]
-}
-```
-
 ### Example
 ```shell
-curl -XPOST "http://localhost:8080/@registry1/math:multiply/1" -H "content-type:application/json" -d '{"x":2,"y":3}'
-```
-
-```shell
-curl -XPOST "http://localhost:8080/@webfaaslabs/math:sum/0" -H "content-type:application/json" -d '{"x":2,"y":3}' -v
+curl -XPOST https://xxx.execute-api.us-east-1.amazonaws.com/prod/@webfaaslabs/math:sum/1.0.0 -H "x-api-key: xxx" -H "content-type: application/json" -d '{"x":2,"y":3}' -v
 ```
 
 ## License
